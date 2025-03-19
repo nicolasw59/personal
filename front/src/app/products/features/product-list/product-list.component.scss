@@ -1,5 +1,17 @@
 :host {
-    display: block;
-    height: 100%;
-    overflow: auto;
+  display: block;
+  height: 100%;
+  overflow: auto;
+}
+
+p-card .card-informations {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+
+  grid-template-rows: auto;
+
+  *:nth-child(even) {
+    text-align: end;
+  }
 }
