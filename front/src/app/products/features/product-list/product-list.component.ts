@@ -5,6 +5,7 @@ import { Product } from 'app/products/data-access/product.model'
 import { ProductsService } from 'app/products/data-access/products.service'
 import { ProductFormComponent } from 'app/products/ui/product-form/product-form.component'
 import { InventoryStatus } from 'app/shared/enums/inventoryStatus'
+import { TagInventaryStatusComponent } from 'app/shared/ui/tag-inventary-status/tag-inventary-status.component'
 import { ButtonModule } from 'primeng/button'
 import { CardModule } from 'primeng/card'
 import { DataViewModule } from 'primeng/dataview'
@@ -37,6 +38,7 @@ const emptyProduct: Product = {
     CardModule,
     ButtonModule,
     DialogModule,
+    TagInventaryStatusComponent,
     ProductFormComponent,
     CommonModule,
   ],
