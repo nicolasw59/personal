@@ -1,0 +1,19 @@
+p-card {
+  .p-card-content {
+    display: grid;
+    padding: 0;
+    grid-template-columns: 80% 20%;
+
+    .price {
+      text-align: right;
+      align-self: center;
+      margin-right: 3px;
+    }
+  }
+}
+
+.empty-cart-content {
+  height: 100%;
+  text-align: center;
+  align-content: center;
+}

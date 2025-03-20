@@ -1,31 +1,74 @@
 <h1 class="text-center">Liste des produits</h1>
 
-<p-button label="Créer produit" (onClick)="onCreate()" class="block text-center"/>
+<p-button
+  label="Créer produit"
+  (onClick)="onCreate()"
+  class="block text-center"
+/>
 
 <p-dataView #dv [value]="products()">
-    <ng-template pTemplate="list" let-products>
-        @for (product of products; track product) {
-            <p-card class="block mb-2">
-                <span class="font-medium text-secondary text-sm">{{ product.category }}</span>
-                <div class="text-lg font-medium text-900 mt-2">{{ product.name }}</div>
+  <ng-template pTemplate="list" let-products>
+    @for (product of products; track product) {
+      <p-card class="block mb-2">
+        <div class="card-informations">
+          <span class="font-medium text-secondary text-sm">
+            {{ product.category }}</span
+          >
+          <app-tag-inventary-status
+            [productStatus]="product.inventoryStatus"
+          />
+          <div class="text-lg font-medium text-900 mt-2">
+            {{ product.name }}
+          </div>
+          <div class="text-lg font-medium text-900 mt-2">
+            {{ product.price }}€
+          </div>
+        </div>
 
-                <ng-template pTemplate="footer">
-                    <div class="flex gap-3 mt-1">
-                        <p-button label="Modifier" severity="secondary" (onClick)="onUpdate(product)"/>
-                        <p-button label="Supprimer" severity="danger" (onClick)="onDelete(product)" />
-                    </div>
-                </ng-template>
-            </p-card>
-        }
-    </ng-template>
+        <ng-template pTemplate="footer">
+          <div class="flex gap-3 mt-1 buttons">
+            <div class="flex gap-3">
+              <p-button
+                label="Modifier"
+                severity="secondary"
+                (onClick)="onUpdate(product)"
+              />
+              <p-button
+                label="Supprimer"
+                severity="danger"
+                (onClick)="onDelete(product)"
+              />
+            </div>
+            <p-button
+              *ngIf="isProductInCart(product.id); else addToCartButton"
+              label="Supprimer du panier"
+              severity="danger"
+              (onClick)="removeProductToCart(product.id)"
+            />
+            <ng-template #addToCartButton>
+              <p-button
+                label="Ajouter au panier"
+                [disabled]="
+                  product.inventoryStatus === InventoryStatus.OUTOFSTOCK
+                "
+                (onClick)="addProductToCart(product)"
+              />
+            </ng-template>
+          </div>
+        </ng-template>
+      </p-card>
+    }
+  </ng-template>
 </p-dataView>
 
-<p-dialog [(visible)]="isDialogVisible"
-    [style]="{ width: '50vw' }"
-    header="Ajout/Edition produit">
-    <app-product-form
-        [product]="editedProduct()"
-        (save)="onSave($event)"
-        (cancel)="onCancel()"
-    />
+<p-dialog
+  [(visible)]="isDialogVisible"
+  [style]="{ width: '50vw' }"
+  header="Ajout/Edition produit"
+>
+  <app-product-form
+    [product]="editedProduct()"
+    (save)="onSave($event)"
+    (cancel)="onCancel()"
+  />
 </p-dialog>
