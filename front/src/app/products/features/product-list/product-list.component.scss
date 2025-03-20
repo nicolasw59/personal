@@ -4,14 +4,20 @@
   overflow: auto;
 }
 
-p-card .card-informations {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+p-card {
+  .card-informations {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
 
-  grid-template-rows: auto;
+    grid-template-rows: auto;
 
-  *:nth-child(even) {
-    text-align: end;
+    *:nth-child(even) {
+      text-align: end;
+    }
+  }
+
+  .buttons {
+    justify-content: space-between;
   }
 }

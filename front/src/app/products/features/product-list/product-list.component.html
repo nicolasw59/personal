@@ -26,17 +26,34 @@
         </div>
 
         <ng-template pTemplate="footer">
-          <div class="flex gap-3 mt-1">
+          <div class="flex gap-3 mt-1 buttons">
+            <div class="flex gap-3">
+              <p-button
+                label="Modifier"
+                severity="secondary"
+                (onClick)="onUpdate(product)"
+              />
+              <p-button
+                label="Supprimer"
+                severity="danger"
+                (onClick)="onDelete(product)"
+              />
+            </div>
             <p-button
-              label="Modifier"
-              severity="secondary"
-              (onClick)="onUpdate(product)"
-            />
-            <p-button
-              label="Supprimer"
+              *ngIf="isProductInCart(product.id); else addToCartButton"
+              label="Supprimer du panier"
               severity="danger"
-              (onClick)="onDelete(product)"
+              (onClick)="removeProductToCart(product.id)"
             />
+            <ng-template #addToCartButton>
+              <p-button
+                label="Ajouter au panier"
+                [disabled]="
+                  product.inventoryStatus === InventoryStatus.OUTOFSTOCK
+                "
+                (onClick)="addProductToCart(product)"
+              />
+            </ng-template>
           </div>
         </ng-template>
       </p-card>

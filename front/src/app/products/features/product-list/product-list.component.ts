@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common'
 import { Component, OnInit, inject, signal } from '@angular/core'
+import { CartService } from 'app/cart/data-access/cart.service'
 import { Product } from 'app/products/data-access/product.model'
 import { ProductsService } from 'app/products/data-access/products.service'
 import { ProductFormComponent } from 'app/products/ui/product-form/product-form.component'
+import { InventoryStatus } from 'app/shared/enums/inventoryStatus'
 import { ButtonModule } from 'primeng/button'
 import { CardModule } from 'primeng/card'
 import { DataViewModule } from 'primeng/dataview'
@@ -40,16 +42,22 @@ const emptyProduct: Product = {
   ],
 })
 export class ProductListComponent implements OnInit {
-  private readonly productsService = inject(ProductsService)
+  constructor(
+    private productsService: ProductsService,
+    private cartService: CartService,
+  ) {}
 
   public readonly products = this.productsService.products
+  public readonly cart = this.cartService.cart
 
   public isDialogVisible = false
   public isCreation = false
   public readonly editedProduct = signal<Product>(emptyProduct)
+  public InventoryStatus = InventoryStatus
 
   ngOnInit() {
     this.productsService.get().subscribe()
+    this.cartService.get().subscribe()
   }
 
   public onCreate() {
@@ -77,11 +85,26 @@ export class ProductListComponent implements OnInit {
     this.closeDialog()
   }
 
+  public addProductToCart(product: Product) {
+    if (product.inventoryStatus === InventoryStatus.OUTOFSTOCK) {
+      return
+    }
+    this.cartService.addProduct(product).subscribe()
+  }
+
+  public removeProductToCart(productId: number) {
+    this.cartService.removeProduct(productId).subscribe()
+  }
+
   public onCancel() {
     this.closeDialog()
   }
 
   private closeDialog() {
     this.isDialogVisible = false
+  }
+
+  public isProductInCart(productId: number): boolean {
+    return this.cart().findIndex((product) => product.id === productId) >= 0
   }
 }
