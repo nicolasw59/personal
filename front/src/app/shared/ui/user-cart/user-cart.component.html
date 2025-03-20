@@ -1,0 +1,27 @@
+<div *ngIf="products.length > 0; else emptyCart">
+  <p-dataView #dv [value]="products">
+    <ng-template pTemplate="list" let-products>
+      @for (product of products; track product) {
+        <p-card class="block mb-2">
+          <div class="p-card-content">
+            <div>
+              <span class="font-medium text-secondary text-sm">
+                {{ product.category }}</span
+              >
+              <div class="text-lg font-medium text-900 mt-2">
+                {{ product.name }}
+              </div>
+            </div>
+            <div class="text-lg font-medium text-900 mt-2 price">
+              {{ product.price }}€
+            </div>
+          </div>
+        </p-card>
+      }
+    </ng-template>
+  </p-dataView>
+</div>
+
+<ng-template #emptyCart>
+  <div class="empty-cart-content">Votre panier Alten Shop est vide.</div>
+</ng-template>

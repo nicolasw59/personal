@@ -1,4 +1,12 @@
 .app-content {
-    overflow: hidden;
-    height: 100%;
+  overflow: hidden;
+  height: 100%;
+}
+
+i {
+  margin-right: 10px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
