@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http'
 import { inject, Injectable, signal } from '@angular/core'
 import { Product } from 'app/products/data-access/product.model'
 import { Observable, catchError, tap, of } from 'rxjs'
-import { Cart } from './cart.model'
 
 @Injectable({
   providedIn: 'root',
